@@ -1,0 +1,38 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-title>
+       Campaign report
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <form (ngSubmit)="submit()">
+        <ion-item>
+          <ion-label floating> X-Axis Dimensions </ion-label>
+          <ion-select [(ngModel)]="chartform.xdimension" [ngModelOptions]="{standalone: true}" (ionChange)="change_dimension_options('xdimension')">
+            <ion-select-option *ngFor=" let dimension of xdimensionoptions">
+              {{dimension}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item *ngIf="chartform.xdimension">
+          <ion-label floating> Y-Axis Dimensions </ion-label>
+          <ion-select [(ngModel)]="chartform.ydimension" (ionChange)="change_dimension_options('ydimension')" [ngModelOptions]="{standalone: true}">
+            <ion-select-option *ngFor=" let dimension of ydimensionoptions ">
+              {{dimension}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-button (click)="submit();" scolor="primary" float-right>Generate</ion-button>
+      </form>
+    </ion-list>
+    <ion-card>
+      <ion-card-header>
+        Bar Chart
+      </ion-card-header>
+      <ion-card-content>
+        <canvas #barCanvas></canvas>
+      </ion-card-content>
+    </ion-card>
+  </ion-content>

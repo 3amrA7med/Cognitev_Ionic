@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Add a new campaign
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-card class="welcome-card">
+        <ion-img src="/assets/shapes.svg"></ion-img>
+        <ion-card-header>
+          <ion-card-subtitle>Cognitev</ion-card-subtitle>
+          <ion-card-title>Welcome to Instascaler</ion-card-title>
+          <ion-card-content>
+              <p>Put your advertising on autopilot. We help small business owners and startups to get laser targeted
+                 and high quality visitors to their websites automatically!
+              </p>
+            </ion-card-content> 
+        </ion-card-header>
+      </ion-card>
+  <ion-list>
+    <form>
+      <ion-item>*
+        <ion-label floating>Name </ion-label>
+        <ion-input type="text" [(ngModel)]="campaign.name" 
+        [ngModelOptions]="{standalone: true}"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Country</ion-label>
+        <ion-input type="text" [(ngModel)]="campaign.country" [ngModelOptions]="{standalone: true}" ></ion-input>
+      </ion-item>
+      <ion-item>*
+          <ion-label floating> budget </ion-label>
+          <ion-select [(ngModel)]="campaign.budget" [ngModelOptions]="{standalone: true}" >
+            <ion-select-option *ngFor=" let dimension of budgetdimensionoptions">
+              {{dimension}}
+            </ion-select-option>
+          </ion-select>
+      </ion-item>*
+      <ion-item>
+        <ion-label floating>Goal</ion-label>
+        <ion-input type="text" [(ngModel)]="campaign.goal" [ngModelOptions]="{standalone: true}"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Category</ion-label>
+        <ion-input type="text" [(ngModel)]="campaign.category" [ngModelOptions]="{standalone: true}"></ion-input>
+      </ion-item>
+      <ion-button type="submit" scolor="primary" (click)="submit();" float-right>Create</ion-button>
+    </form>
+  </ion-list>
+</ion-content>
