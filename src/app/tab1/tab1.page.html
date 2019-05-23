@@ -26,7 +26,7 @@
         <ion-input type="text" [(ngModel)]="campaign.name" 
         [ngModelOptions]="{standalone: true}"></ion-input>
       </ion-item>
-      <ion-item>
+      <ion-item>*
         <ion-label floating>Country</ion-label>
         <ion-input type="text" [(ngModel)]="campaign.country" [ngModelOptions]="{standalone: true}" ></ion-input>
       </ion-item>
@@ -37,8 +37,8 @@
               {{dimension}}
             </ion-select-option>
           </ion-select>
-      </ion-item>*
-      <ion-item>
+      </ion-item>
+      <ion-item>*
         <ion-label floating>Goal</ion-label>
         <ion-input type="text" [(ngModel)]="campaign.goal" [ngModelOptions]="{standalone: true}"></ion-input>
       </ion-item>

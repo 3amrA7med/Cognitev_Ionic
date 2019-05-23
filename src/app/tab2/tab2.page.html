@@ -9,7 +9,7 @@
     <ion-list>
       <form (ngSubmit)="submit()">
         <ion-item>
-          <ion-label floating> X-Axis Dimensions </ion-label>
+          <ion-label floating> 1st Dimension </ion-label>
           <ion-select [(ngModel)]="chartform.xdimension" [ngModelOptions]="{standalone: true}" (ionChange)="change_dimension_options('xdimension')">
             <ion-select-option *ngFor=" let dimension of xdimensionoptions">
               {{dimension}}
@@ -17,7 +17,7 @@
           </ion-select>
         </ion-item>
         <ion-item *ngIf="chartform.xdimension">
-          <ion-label floating> Y-Axis Dimensions </ion-label>
+          <ion-label floating> 2nd Dimension </ion-label>
           <ion-select [(ngModel)]="chartform.ydimension" (ionChange)="change_dimension_options('ydimension')" [ngModelOptions]="{standalone: true}">
             <ion-select-option *ngFor=" let dimension of ydimensionoptions ">
               {{dimension}}
