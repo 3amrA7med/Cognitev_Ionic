@@ -138,7 +138,7 @@ export class Tab2Page {
   async presentAlert() {
     const alert = await this.alertController.create({
       header: 'Error',
-      message: 'Please select X-axis and Y-axis dimensions',
+      message: 'Please select 1st and 2nd dimensions',
       cssClass: 'alertCustomCss',
       buttons: ['OK']
     });
