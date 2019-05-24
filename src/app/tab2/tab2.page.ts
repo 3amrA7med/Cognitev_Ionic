@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js';
 import { AlertController } from '@ionic/angular';
 import { ApplicationRef, ChangeDetectorRef } from '@angular/core';
+import { CampaignService } from '../campaign.service';
 declare var require: any;
 var groupArray = require('group-array');
 // import {groupArray} from 'group-array';
@@ -55,7 +56,7 @@ export class Tab2Page {
   datavalues = [];
   datasets = [];
   constructor(public alertController: AlertController, private app: ApplicationRef,
-  private changedetector: ChangeDetectorRef) { }
+  private changedetector: ChangeDetectorRef, public campaignService:CampaignService) { }
 
   /**
    * Get parameters values to generate the required chart
@@ -67,10 +68,14 @@ export class Tab2Page {
     }
     this.dimensions['x-axis'] = this.chartform['xdimension'].trim();
     this.dimensions['y-axis'] = this.chartform['ydimension'].trim();
-    this.set_data();
-    this.draw_chart();
+    this.campaignService.get_campaigns().subscribe(data=>{
+      this.data = data
+      
+      console.log(data); 
+      this.set_data();
+      this.draw_chart();
+    })
   }
-
   /**
    * Render data labels and data values
    * group data by selected x-axis dimension to show totals
@@ -78,14 +83,36 @@ export class Tab2Page {
   set_data() {
     this.datavalues = [];
     this.datalabels = [];
+    for(let i in this.data){
+      this.data[i]['goal'] = this.data[i]['goal'].trim();
+      this.data[i]['category'] = this.data[i]['category'].trim();
+      this.data[i]['country'] = this.data[i]['country'].trim();
+      this.data[i]['name'] = this.data[i]['name'].trim();
+
+    }
+console.log(this.data);    
     let grouping = groupArray(this.data, this.dimensions['x-axis']);
+
+
+console.log(this.dimensions)
     this.datasets = [];
     let subgroup_datasets = {};
+    // console.log("grouping", grouping)
     for (let g in grouping) {
       this.datalabels.push(g);
       let totalgroup = 0;
+      console.log('/..............', grouping, 'g', g)
       let subgroups = groupArray(grouping[g], this.dimensions['y-axis']);
+      console.log("grouped grouped", subgroups)
+      
+// console.log(subgroups,'///////////////////////////') 
+      // console.log(g,  'subgroup is', subgroups);
+      // console.log('//////////////////')
+      // console.log('subgroups', subgroups)
       for (let subgroup in subgroups) {
+        // console.log('subgroup', subgroup);
+        // console.log(subgroup_datasets, ',,,,', subgroup)
+        console.log(subgroup)
         if (subgroup_datasets[subgroup]) {
           subgroup_datasets[subgroup].push(subgroups[subgroup].length);
         }
@@ -93,14 +120,20 @@ export class Tab2Page {
           subgroup_datasets[subgroup] = [subgroups[subgroup].length];
         }
       }
+      console.log('////////////////')
+      console.log(subgroup_datasets)
       this.datavalues.push(totalgroup);
     }
+
+    console.log(subgroup_datasets)
 
     let counter = 0;
     for (let subgroup in subgroup_datasets) {
       if (counter > 3)
         counter = 0;
       counter += 1;
+      console.log('subgroup=>', subgroup)
+      console.log(subgroup_datasets)
       this.datasets.push({
         label: subgroup,
         data: subgroup_datasets[subgroup],
@@ -114,6 +147,7 @@ export class Tab2Page {
    * Draw bar chart to represent data according to user's choice
    */
   draw_chart() {
+    if (this.barChart) this.barChart.destroy();
     this.barChart = new Chart(this.barCanvas.nativeElement, {
       type: 'bar',
       data: {

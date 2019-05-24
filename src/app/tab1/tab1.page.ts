@@ -33,7 +33,7 @@ export class Tab1Page {
    * Reset campaign input fields when loading the page or when successfully added a campaign.
    */
   reset_campaign(){
-    this.campaign = { 'name': '', 'budget': 0, 'country': '', 'category': '', 'goal': '' };
+    this.campaign = { 'name': '', 'budget': 0, 'country': '', 'category': null, 'goal': '' };
   }
   /**Validate all fields are filled with data */
   validate() {
@@ -74,12 +74,10 @@ export class Tab1Page {
    * in order to be saved
    */
    save(){
-     console.log("********************************************")
      this.campaignService.add_campaign(this.campaign).subscribe( data =>{
          this.presentToast('Campaign is saved successfully', 'success');
          this.reset_campaign();
      }
      )
-     console.log(this.campaign);
    }
 }
